@@ -26,6 +26,7 @@ export interface Participant {
   isAdmin: boolean;
   hasPaid: boolean;
   timezone: string;
+  totalPoints?: number;
 }
 
 /**
@@ -37,6 +38,15 @@ export interface Team {
   iconUrl: string;
 }
 
+/**
+ * Represents a document in the 'Groups' subcollection under a 'Pool' document.
+ */
+export interface Group {
+  id: string;
+  name: string; // e.g., "Group A"
+  teamIds: string[];
+}
+
 export type MatchStatus = "scheduled" | "in-progress" | "finished" | "scored";
 
 /**
@@ -44,6 +54,7 @@ export type MatchStatus = "scheduled" | "in-progress" | "finished" | "scored";
  */
 export interface Match {
   id: string;
+  groupId?: string; // Optional: for group stage matches
   homeTeamId: string;
   awayTeamId: string;
   matchStartTime: Timestamp;
@@ -58,17 +69,9 @@ export interface Match {
  * Represents a document in the 'Bets' subcollection under a 'Match' document.
  */
 export interface Bet {
-  id: string; // Corresponds to the participant's UID
+  participantId: string;
+  matchId: string;
   homeGoalsBet: number;
   awayGoalsBet: number;
   pointsAwarded?: number;
-}
-
-/**
- * Represents a document in the 'Scoreboard' subcollection under a 'Pool' document.
- */
-export interface ScoreboardEntry {
-  id: string; // Corresponds to the participant's UID
-  displayName: string;
-  totalPoints: number;
 }
