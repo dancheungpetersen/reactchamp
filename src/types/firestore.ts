@@ -10,8 +10,7 @@ export interface ScoringRules {
 /**
  * All fields are editable by pool owners, except id
  */
-export interface Pool {
-  id: string;
+export interface PoolSettings {
   name: string; 
   description: string;
   logo?: string; 
